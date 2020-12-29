@@ -197,10 +197,13 @@ public class AnimationZeldo extends Carte
 
 			if (caseTemp.getObjetDecor() != null)
 			{
-				g.drawImage(
-								caseTemp.getObjetDecor().getImage(),
-								caseTemp.getX() * CaseCarte.caseWidth, caseTemp.getY() * CaseCarte.caseHeight,
-								this);
+				g.drawImage
+				(
+					caseTemp.getObjetDecor().getImage(),
+					caseTemp.getX() * CaseCarte.caseWidth,
+					caseTemp.getY() * CaseCarte.caseHeight,
+					this
+				);
 			}
 			
 		}
@@ -258,7 +261,6 @@ public class AnimationZeldo extends Carte
 						listPerso.get(i).getPosYAnim(),
 						this
 					);
-
 
 				}
 
