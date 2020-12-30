@@ -1,4 +1,4 @@
-package calcul.objet;
+package calcul.objet.decor;
 
 import java.awt.Image;
 import java.io.Serializable;

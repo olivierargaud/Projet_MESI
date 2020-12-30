@@ -5,8 +5,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import calcul.objet.Equipement;
-import calcul.objet.ObjetDecor;
+import calcul.objet.equipement.Equipement;
 
 public class Coffre extends ObjetDecor
 {

@@ -5,7 +5,7 @@ import java.util.Hashtable;
 import affichage.FenetrePrinc;
 import calcul.objet.Carte;
 import calcul.objet.CaseInventaire;
-import calcul.objet.Perso;
+import calcul.objet.perso.Link;
 
 public class MainZeldo
 {
@@ -16,17 +16,15 @@ public class MainZeldo
 	// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
 
-	public static Hashtable<String, Carte> listeCarte =
-					new Hashtable<String, Carte>();
+	public static Hashtable<String, Carte> listeCarte =	new Hashtable<String, Carte>();
 	
 	public static Carte carteActuelle = new Carte();
 
-	public static Hashtable<String, CaseInventaire> listeCaseInventaire =
-					new Hashtable<String, CaseInventaire>();
+	public static Hashtable<String, CaseInventaire> listeCaseInventaire = new Hashtable<String, CaseInventaire>();
 	
 	public static CaseInventaire caseInvSelect = new CaseInventaire();
 
-	public static Perso link = new Perso();
+	public static Link link = new Link();
 	
 	
 	public static FenetrePrinc fen;

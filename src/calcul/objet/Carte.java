@@ -1,6 +1,9 @@
 package calcul.objet;
 
+import calcul.objet.perso.Perso;
+
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import javax.swing.JPanel;
@@ -19,6 +22,8 @@ public class Carte extends JPanel
 	public static final Integer carteWidth = 20;
 
 	private Hashtable<String, CaseCarte> listeCase = new Hashtable<String, CaseCarte>();
+
+	private ArrayList<Perso> listPerso = new ArrayList<Perso>();
 
 	private PositionCarte positionCarte = new PositionCarte();
 
@@ -56,6 +61,13 @@ public class Carte extends JPanel
 		return positionCarte;
 	}
 
+
+	public ArrayList<Perso> getListPerso()
+	{
+		return listPerso;
+	}
+
+
 	// -------------------------------------------------------------------------------------------------------
 	// -----------------------------------------------JPANEL--------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
@@ -91,7 +103,12 @@ public class Carte extends JPanel
 	{
 		this.positionCarte = positionCarte;
 	}
-	
+
+	public void setListPerso(ArrayList<Perso> listPerso)
+	{
+		this.listPerso = listPerso;
+	}
+
 	// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
 	// -----------------------------------------------FONCTION------------------------------------------------

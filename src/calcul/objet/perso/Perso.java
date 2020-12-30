@@ -1,16 +1,12 @@
-package calcul.objet;
+package calcul.objet.perso;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import calcul.MainZeldo;
-import calcul.objet.decor.Arbre;
-import calcul.objet.decor.Coffre;
-
-import javax.imageio.ImageIO;
+import calcul.objet.Carte;
+import calcul.objet.CaseCarte;
+import calcul.objet.equipement.Equipement;
 
 public class Perso
 {
@@ -29,7 +25,7 @@ public class Perso
 	protected int		posX		= 0;
 	protected int		posY		= 0;
 
-	protected int		posXAnim		= posX*CaseCarte.caseHeight;
+	protected int		posXAnim		= posX* CaseCarte.caseHeight;
 	protected int		posYAnim		= posY* CaseCarte.caseWidth;
 	
 	protected int	direction	= 2;
@@ -326,7 +322,15 @@ public class Perso
 	
 	public Image getImage()
 	{
-		img = sprite.getSubimage(64*phaseAnim,64*direction,64,64);
+		try
+		{
+			img = sprite.getSubimage(64*phaseAnim,64*direction,64,64);
+		}
+		catch(Exception e)
+		{
+			System.out.println("phase anim = "+phaseAnim);
+			System.out.println("direction = "+direction);
+		}
 
 		return img;
 	}
@@ -476,42 +480,6 @@ public class Perso
 
 
 
-	public void planterUnArbre()
-	{
-		getCaseDevant().setObjetDecor(new Arbre());
-	}
-
-	public void couperUnArbre()
-	{
-		getCaseDevant().setObjetDecor(null);
-		getCaseDevant().setTraversable(true);
-	}
-
-
-	public void ouvrirCoffre(Coffre coffre)
-	{
-
-		if(coffre.getEquipement()!=null)
-		{
-			equipementArrayList.add(coffre.getEquipement());
-			coffre.setEquipement(null);
-			try
-			{
-				BufferedImage image = ImageIO.read(new File("res/image/coffre_ouvert.png"));
-				coffre.setImage(image);
-			}
-			catch (IOException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-
-
-		}
-
-
-	}
 
 
 	

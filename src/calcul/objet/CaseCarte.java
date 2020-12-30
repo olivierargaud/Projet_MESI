@@ -1,5 +1,8 @@
 package calcul.objet;
 
+import calcul.objet.decor.ObjetDecor;
+import calcul.objet.perso.PNJ;
+
 import javax.swing.JPanel;
 
 public class CaseCarte extends JPanel
@@ -32,7 +35,8 @@ public class CaseCarte extends JPanel
 	private int posYDestination = 0;
 	
 	private ObjetDecor objetDecor = null;
-	
+
+	private PNJ pnj ;
 	
 	// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
@@ -114,7 +118,13 @@ public class CaseCarte extends JPanel
 	{
 		return objetDecor;
 	}
-	
+
+	public PNJ getPnj()
+	{
+		return pnj;
+	}
+
+
 	
 	// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
@@ -154,7 +164,12 @@ public class CaseCarte extends JPanel
 			this.traversable = objetDecor.getTraversable();
 		}
 	}
-	
+
+	public void setPnj(PNJ pnj)
+	{
+		this.pnj = pnj;
+	}
+
 	// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
 	// -----------------------------------------------FONCTION------------------------------------------------

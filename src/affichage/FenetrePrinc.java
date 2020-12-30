@@ -18,8 +18,8 @@ import calcul.GenerationCarte;
 import calcul.MainZeldo;
 import calcul.fonction_maison.Couleur;
 import calcul.objet.CaseCarte;
-import calcul.objet.Equipement;
-import calcul.objet.Perso;
+import calcul.objet.perso.PNJ;
+import calcul.objet.perso.Perso;
 import calcul.objet.decor.Arbre;
 import calcul.objet.decor.Coffre;
 import calcul.objet.perso.Link;
@@ -39,6 +39,9 @@ public class FenetrePrinc extends JFrame
 	public static final Integer SUD = 2;
 	public static final Integer EST = 3;
 
+	public static final Integer PAS_PIXEL = 4;
+
+	public static final Integer TEMPS_DE_PAUSE = 20;
 
 	private JPanel panelPrinc = new JPanel();
 
@@ -60,7 +63,7 @@ public class FenetrePrinc extends JFrame
 
 	private Thread t;
 
-	private int tempsDePause = 20;
+
 
 	private boolean gauche = false;
 	private boolean droite = false;
@@ -100,24 +103,76 @@ public class FenetrePrinc extends JFrame
 				if (e.getKeyCode() == 37)
 				{
 					gauche = false;
+
+					if(haut)
+					{
+						MainZeldo.link.setDirection(NORD);
+					}
+					if(bas)
+					{
+						MainZeldo.link.setDirection(SUD);
+					}
+					if(droite)
+					{
+						MainZeldo.link.setDirection(EST);
+					}
 				}
 
 				// haut
 				if (e.getKeyCode() == 38)
 				{
 					haut = false;
+
+					if(gauche)
+					{
+						MainZeldo.link.setDirection(OUEST);
+					}
+					if(droite)
+					{
+						MainZeldo.link.setDirection(EST);
+					}
+					if(bas)
+					{
+						MainZeldo.link.setDirection(SUD);
+					}
 				}
 
 				// droite
 				if (e.getKeyCode() == 39)
 				{
 					droite = false;
+
+					if(haut)
+					{
+						MainZeldo.link.setDirection(NORD);
+					}
+					if(bas)
+					{
+						MainZeldo.link.setDirection(SUD);
+					}
+					if(gauche)
+					{
+						MainZeldo.link.setDirection(OUEST);
+					}
 				}
 
 				// bas
 				if (e.getKeyCode() == 40)
 				{
 					bas = false;
+
+					if(haut)
+					{
+						MainZeldo.link.setDirection(NORD);
+					}
+					if(gauche)
+					{
+						MainZeldo.link.setDirection(OUEST);
+					}
+					if(droite)
+					{
+						MainZeldo.link.setDirection(EST);
+					}
 				}
 
 			}
@@ -193,6 +248,15 @@ public class FenetrePrinc extends JFrame
 				// I
 				if (e.getKeyCode() == 73)
 				{
+
+					System.out.println("info");
+					System.out.println("nombre de perso "+MainZeldo.carteActuelle.getListPerso().size());
+					for (Perso perso:MainZeldo.carteActuelle.getListPerso())
+					{
+						System.out.println("perso "+perso.getType());
+					}
+					System.out.println();
+					
 					// if(start)
 					// {
 					// MainZelda.inv = new Inventaire();
@@ -203,18 +267,29 @@ public class FenetrePrinc extends JFrame
 				if (e.getKeyCode() == 32)
 				{
 					 System.out.println("action");
-					 // ouvrir un coffre
-					 if(MainZeldo.link.getCaseDevant().getObjetDecor() instanceof Coffre)
-					 {
-						 MainZeldo.link.ouvrirCoffre((Coffre) MainZeldo.link.getCaseDevant().getObjetDecor());
-					 }
+
+					////////////////////////////////////////////////////////////////////
+					// ouvrir un coffre
+					if(MainZeldo.link.getCaseDevant().getObjetDecor() instanceof Coffre)
+					{
+						MainZeldo.link.ouvrirCoffre((Coffre) MainZeldo.link.getCaseDevant().getObjetDecor());
+					}
 
 
-					 // couper un arbre
+					////////////////////////////////////////////////////////////////////
+					// couper un arbre
 					if (MainZeldo.link.getCaseDevant().getObjetDecor() instanceof Arbre)
 					{
 						MainZeldo.link.couperUnArbre();
 					}
+
+					////////////////////////////////////////////////////////////////////
+					// parler a un PNJ
+					if(MainZeldo.link.getCaseDevant().getPnj() instanceof PNJ)
+					{
+						System.out.println("on parle au PNJ");
+					}
+
 
 
 					// actionLink(MainZelda.listePerso.get("Link"));
@@ -229,6 +304,7 @@ public class FenetrePrinc extends JFrame
 				// esc
 				if (e.getKeyCode() == 27)
 				{
+					haut = bas = gauche = droite = false ;
 					new MenuPrinc();
 				}
 			}
@@ -242,6 +318,11 @@ public class FenetrePrinc extends JFrame
 	// -----------------------------------------------GETTER--------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
+
+	public AnimationZeldo getAnim()
+	{
+		return anim;
+	}
 
 	// -------------------------------------------------------------------------------------------------------
 	// -----------------------------------------------JPANEL--------------------------------------------------
@@ -389,7 +470,7 @@ public class FenetrePrinc extends JFrame
 
 		MainZeldo.carteActuelle = MainZeldo.listeCarte.get("Maison Depart 0 0");
 
-		Link link = new Link(3, 3, 1, "Link", Color.ORANGE);
+		Link link = new Link(3, 3, 1, "Link");
 		try
 		{
 			link.setSprite(ImageIO.read(new File("res/image/BODY_male.png")));
@@ -466,48 +547,51 @@ public class FenetrePrinc extends JFrame
 			}
 			else
 			{
-//					MainZeldo.link.setImage(MainZeldo.link.getListeImage().get(MainZeldo.link.getPhaseAnim()));
+//				MainZeldo.link.setImage(MainZeldo.link.getListeImage().get(MainZeldo.link.getPhaseAnim()));
+				boolean nextAnim = false;
+				if (gauche && MainZeldo.link.getMoveGauche())
+				{
+					MainZeldo.link.setPosXAnim(MainZeldo.link.getPosXAnim() - PAS_PIXEL);
+					nextAnim = true;
+				}
+				if (haut && MainZeldo.link.getMoveHaut())
+				{
+					MainZeldo.link.setPosYAnim(MainZeldo.link.getPosYAnim() - PAS_PIXEL);
+					nextAnim = true;
+				}
+				if (droite && MainZeldo.link.getMoveDroite())
+				{
+					MainZeldo.link.setPosXAnim(MainZeldo.link.getPosXAnim() + PAS_PIXEL);
+					nextAnim = true;
+				}
+				if (bas && MainZeldo.link.getMoveBas())
+				{
+					MainZeldo.link.setPosYAnim(MainZeldo.link.getPosYAnim() + PAS_PIXEL);
+					nextAnim = true;
+				}
+				if(nextAnim)
+				{
+					MainZeldo.link.setPhaseAnim(MainZeldo.link.getPhaseAnim()+1);
+				}
 
-					if (gauche && MainZeldo.link.getMoveGauche())
-					{
-						MainZeldo.link.setPosXAnim(MainZeldo.link.getPosXAnim() - 4);
-						MainZeldo.link.setPhaseAnim(MainZeldo.link.getPhaseAnim()+1);
-					}
+				anim.repaint();
 
-					if (haut && MainZeldo.link.getMoveHaut())
-					{
-						MainZeldo.link.setPosYAnim(MainZeldo.link.getPosYAnim() - 4);
-						MainZeldo.link.setPhaseAnim(MainZeldo.link.getPhaseAnim()+1);
-					}
+				if(MainZeldo.link.getPhaseAnim()>=8)
+				{
+					MainZeldo.link.setPhaseAnim(0);
+				}
 
-					if (droite && MainZeldo.link.getMoveDroite())
-					{
-						MainZeldo.link.setPosXAnim(MainZeldo.link.getPosXAnim() + 4);
-						MainZeldo.link.setPhaseAnim(MainZeldo.link.getPhaseAnim()+1);
-					}
-					if (bas && MainZeldo.link.getMoveBas())
-					{
-						MainZeldo.link.setPosYAnim(MainZeldo.link.getPosYAnim() + 4);
-						MainZeldo.link.setPhaseAnim(MainZeldo.link.getPhaseAnim()+1);
-					}
-					anim.repaint();
-
-					if(MainZeldo.link.getPhaseAnim()>8)
-					{
-						MainZeldo.link.setPhaseAnim(0);
-					}
-					
 //					System.out.println("direction " +MainZeldo.link.getDirection());
-					
-					// temps de pause entre deux pas
-					try
-					{
-						Thread.sleep(tempsDePause);
-					}
-					catch (InterruptedException e)
-					{
-						e.printStackTrace();
-					}
+
+				// temps de pause entre deux pas
+				try
+				{
+					Thread.sleep(TEMPS_DE_PAUSE);
+				}
+				catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
 
 				
 			}
@@ -521,18 +605,22 @@ public class FenetrePrinc extends JFrame
 	{
 		boolean test = false;
 
-		CaseCarte caseDuPerso =
-						MainZeldo.carteActuelle.getListeCase().get(
-										perso.getPosX()
-														+ " "
-														+ perso.getPosY());
+		// on memorise temporairement la position de link
+		CaseCarte caseDuPerso =	MainZeldo.carteActuelle.getListeCase().get
+		(
+			perso.getPosX()
+			+ " "
+			+ perso.getPosY()
+		);
 
+		// si link se trouve sur un tp on modifie la carteActuelle
 		if (caseDuPerso.getTypePassage() != 0)
 		{
 			test = true;
-			MainZeldo.carteActuelle =
-							MainZeldo.listeCarte.get(
-											caseDuPerso.getCarteDestination());
+			MainZeldo.carteActuelle = MainZeldo.listeCarte.get(caseDuPerso.getCarteDestination());
+			// on transfert link sur la nouvelle carte
+			MainZeldo.carteActuelle.getListPerso().add(MainZeldo.link);
+			// fixe la futur position X du perso
 			if(caseDuPerso.getPosXDestination()>=0)
 			{
 				MainZeldo.link.setPosX(caseDuPerso.getPosXDestination());
@@ -541,7 +629,6 @@ public class FenetrePrinc extends JFrame
 			{
 				MainZeldo.link.setPosY(caseDuPerso.getPosYDestination());
 			}
-			
 
 		}
 

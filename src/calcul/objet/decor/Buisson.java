@@ -5,8 +5,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import calcul.objet.ObjetDecor;
-
 public class Buisson extends ObjetDecor
 {
 	// -------------------------------------------------------------------------------------------------------

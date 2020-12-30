@@ -1,4 +1,4 @@
-package calcul.objet;
+package calcul.objet.equipement;
 
 import java.awt.image.BufferedImage;
 public class Equipement
@@ -7,7 +7,6 @@ public class Equipement
     private BufferedImage sprite ;
 
     private BufferedImage img;
-
 
 
 

@@ -1,13 +1,15 @@
 package calcul;
 
-import calcul.objet.Carte;
-import calcul.objet.CaseCarte;
-import calcul.objet.Equipement;
-import calcul.objet.PositionCarte;
+import calcul.objet.*;
 import calcul.objet.decor.Arbre;
 import calcul.objet.decor.Buisson;
 import calcul.objet.decor.Coffre;
 import calcul.objet.decor.Rocher;
+import calcul.objet.equipement.Equipement;
+import calcul.objet.equipement.FeetShoesBrown;
+import calcul.objet.perso.Link;
+import calcul.objet.perso.Perso;
+import calcul.objet.perso.Squelette;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -21,6 +23,7 @@ public class GenerationCarte
 	// -----------------------------------------------VARIABLES-----------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
+
 
 	// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
@@ -233,13 +236,16 @@ public class GenerationCarte
 
 		try
 		{
-			BufferedImage img1 = ImageIO.read(new File("res/image/FEET_shoes_brown.png"));
+//			BufferedImage img1 = ImageIO.read(new File("res/image/FEET_shoes_brown.png"));
 			BufferedImage img2 = ImageIO.read(new File("res/image/LEGS_pants_greenish.png"));
 			BufferedImage img3 = ImageIO.read(new File("res/image/TORSO_robe_shirt_brown.png"));
 			BufferedImage img4 = ImageIO.read(new File("res/image/WEAPON_shield_cutout_body.png"));
 
-			Coffre coffre1 =new Coffre(new Equipement(img1));
-			carte.getListeCase().get("" + 1 + " " + 1).setObjetDecor(coffre1);
+//			Coffre coffre1 =new Coffre(new Equipement(img1));
+//			carte.getListeCase().get("" + 1 + " " + 1).setObjetDecor(coffre1);
+
+			carte.getListeCase().get("" + 1 + " " + 1).setObjetDecor(new Coffre(new FeetShoesBrown()));
+
 
 			Coffre coffre2 =new Coffre(new Equipement(img2));
 			carte.getListeCase().get("" + 2 + " " + 1).setObjetDecor(coffre2);
@@ -254,17 +260,17 @@ public class GenerationCarte
 		}
 
 
+		// PNJ
+		try
+		{
 
-		// lit
-		// for (int i = 2; i < 5; i++)
-		// {
-		// for (int j = 2; j < 6; j++)
-		// {
-		// carte.getListeCase().get("" + i + " " + j).setObjetDecor(new
-		// ObjetDecor());
-		//// carte.getListeCase().get("" + i + " " + j).setType("lit");
-		// }
-		// }
+		}
+		catch(Exception e)
+		{
+
+		}
+
+
 
 		MainZeldo.listeCarte.put(positionCarte.getPositionText(), carte);
 
@@ -303,6 +309,21 @@ public class GenerationCarte
 		
 		carte.getListeCase().get("" + 14 + " " + 7).setObjetDecor(new Buisson());
 
+		Squelette squelette = new Squelette(3, 5, 2, "Squelette");
+		try
+		{
+			squelette.setSprite(ImageIO.read(new File("res/image/BODY_skeleton.png")));
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+		carte.getListPerso().add(squelette);
+
+
+
+
 		MainZeldo.listeCarte.put(positionCarte.getPositionText(), carte);
 
 	}
@@ -314,7 +335,7 @@ public class GenerationCarte
 		
 		// arbre
 		carte.getListeCase().get("" + 0 + " " + 0).setObjetDecor(new Arbre());
-		carte.getListeCase().get("" + 16 + " " + 0).setObjetDecor(new Arbre());
+		carte.getListeCase().get("" + 19 + " " + 0).setObjetDecor(new Arbre());
 		
 		
 		// rocher

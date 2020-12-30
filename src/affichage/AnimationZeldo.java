@@ -9,10 +9,8 @@ import calcul.MainZeldo;
 import calcul.fonction_maison.Couleur;
 import calcul.objet.Carte;
 import calcul.objet.CaseCarte;
-import calcul.objet.Equipement;
-import calcul.objet.Perso;
-import calcul.objet.decor.Arbre;
-import calcul.objet.perso.Link;
+import calcul.objet.equipement.Equipement;
+import calcul.objet.perso.Perso;
 
 public class AnimationZeldo extends Carte
 {
@@ -26,12 +24,12 @@ public class AnimationZeldo extends Carte
 	private static final long serialVersionUID = 1L;
 
 	private ArrayList<Perso> listPerso = new ArrayList<Perso>();
-	private ArrayList<CaseCarte> listCase = new ArrayList<CaseCarte>();
+//	private ArrayList<CaseCarte> listCase = new ArrayList<CaseCarte>();
 
 	private Carte carte;
 
 	private Hashtable<String, CaseCarte> listeCase = new Hashtable<String, CaseCarte>();
-	private Hashtable<String, Perso> listePerso = new Hashtable<String, Perso>();
+//	private Hashtable<String, Perso> listePerso = new Hashtable<String, Perso>();
 
 	private boolean raz = false;
 	
@@ -47,7 +45,10 @@ public class AnimationZeldo extends Carte
 		this.carte = carte;
 
 		listPerso.clear();
+		listPerso = carte.getListPerso();
 		listPerso.add(MainZeldo.link);
+
+		System.out.println("liste perso "+listPerso.size());
 
 	}
 
@@ -62,21 +63,21 @@ public class AnimationZeldo extends Carte
 		return listPerso;
 	}
 
-	public ArrayList<CaseCarte> getListCase()
-	{
-		return listCase;
-	}
+//	public ArrayList<CaseCarte> getListCase()
+//	{
+//		return listCase;
+//	}
 
 	public Hashtable<String,CaseCarte> getListeCaseCarte()
 	{
 		return listeCase;
 	}
-	
-	public Hashtable<String,Perso>getListePerso()
-	{
-		return listePerso;
-	}
-	
+
+//	public Hashtable<String,Perso>getListePerso()
+//	{
+//		return listePerso;
+//	}
+
 	
 	// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
@@ -99,7 +100,7 @@ public class AnimationZeldo extends Carte
 	{
 		raz = true;
 		carte = MainZeldo.carteActuelle;
-		
+		listPerso = carte.getListPerso();
 		listeCase = carte.getListeCase();
 	}
 
@@ -127,7 +128,6 @@ public class AnimationZeldo extends Carte
 		while(e.hasMoreElements())
 		{
 
-//			System.out.println();
 			CaseCarte caseTemp =(CaseCarte) e.nextElement();
 			
 			
@@ -163,27 +163,39 @@ public class AnimationZeldo extends Carte
 				case "herbe":
 				{
 					g.setColor(Couleur.Green_3);
-					g.fillRect(
-									caseTemp.getX() * CaseCarte.caseWidth, caseTemp.getY() * CaseCarte.caseHeight,
-                            CaseCarte.caseWidth, CaseCarte.caseHeight);
+					g.fillRect
+					(
+						caseTemp.getX() * CaseCarte.caseWidth,
+						caseTemp.getY() * CaseCarte.caseHeight,
+						CaseCarte.caseWidth,
+						CaseCarte.caseHeight
+					);
 				}
 					break;
 		
 				case "arbre":
 				{
 					g.setColor(Couleur.Green_1);
-					g.fillRect(
-									caseTemp.getX() * CaseCarte.caseWidth, caseTemp.getY() * CaseCarte.caseHeight,
-                            CaseCarte.caseWidth, CaseCarte.caseHeight);
+					g.fillRect
+					(
+						caseTemp.getX() * CaseCarte.caseWidth,
+						caseTemp.getY() * CaseCarte.caseHeight,
+						CaseCarte.caseWidth,
+						CaseCarte.caseHeight
+					);
 				}
 					break;
 					
 				case "eau":
 				{
 					g.setColor(Couleur.Blue_3);
-					g.fillRect(
-									caseTemp.getX() * CaseCarte.caseWidth, caseTemp.getY() * CaseCarte.caseHeight,
-                            CaseCarte.caseWidth, CaseCarte.caseHeight);
+					g.fillRect
+					(
+						caseTemp.getX() * CaseCarte.caseWidth,
+						caseTemp.getY() * CaseCarte.caseHeight,
+						CaseCarte.caseWidth,
+						CaseCarte.caseHeight
+					);
 				}
 					break;
 		
@@ -207,65 +219,60 @@ public class AnimationZeldo extends Carte
 			}
 			
 		}
-		
-//		listeCase.clear();
-		
-//		// case de la carte
-//		for (int i = 0; i < 17; i++)
-//		{
-//			for (int j = 0; j < 13; j++)
-//			{
-//				CaseCarte caseTemp = carte.getListeCase().get("" + i + " " + j);
-//
-//			}
-//
-//		}
+
 
 		// personnages
 		for (int i = 0; i < listPerso.size(); i++)
 		{
+//			System.out.println("perso dans anim "+listPerso.get(i).getType());
 
 			if (listPerso.get(i).getType().equals("Link"))
 			{
-
-//				g.setColor(listPerso.get(i).getColor());
-//
-
 				// passe en bleu la case ciblé par zeldo
-				g.setColor(new Color(0,255,255,100));
-				g.fillRect
-				(
-					MainZeldo.link.getCaseDevant().getX()*CaseCarte.caseWidth,
-					MainZeldo.link.getCaseDevant().getY()*CaseCarte.caseHeight,
-					CaseCarte.caseWidth,
-					CaseCarte.caseHeight
-				);
+				try
+				{
+					g.setColor(new Color(0,255,255,100));
+					g.fillRect
+					(
+						MainZeldo.link.getCaseDevant().getX()*CaseCarte.caseWidth,
+						MainZeldo.link.getCaseDevant().getY()*CaseCarte.caseHeight,
+						CaseCarte.caseWidth,
+						CaseCarte.caseHeight
+					);
+				}
+				catch (Exception exep)
+				{
+					System.out.println("case devant "+MainZeldo.link.getCaseDevant());
+				}
 
+			}
 
-				// affichage le personnage
+//			System.out.println(listPerso.get(i).getImage());
+//			System.out.println(listPerso.get(i).getPosXAnim());
+//			System.out.println(listPerso.get(i).getPosYAnim());
+			// affichage le personnage
+			g.drawImage
+			(
+				listPerso.get(i).getImage(),
+				listPerso.get(i).getPosXAnim(),
+				listPerso.get(i).getPosYAnim(),
+				this
+			);
+
+			// affiche l'equipement du personnage
+			for (Equipement equipement:listPerso.get(i).getEquipementArrayList())
+			{
 				g.drawImage
 				(
-					listPerso.get(i).getImage(),
-					listPerso.get(i).getPosXAnim(),
+					equipement.getImg(listPerso.get(i).getDirection(),
+					listPerso.get(i).getPhaseAnim()),
+					listPerso.get(i).getPosXAnim() ,
 					listPerso.get(i).getPosYAnim(),
 					this
 				);
 
-				// affiche l'equipement du personnage
-				for (Equipement equipement:listPerso.get(i).getEquipementArrayList())
-				{
-					g.drawImage
-					(
-						equipement.getImg(listPerso.get(i).getDirection(),listPerso.get(i).getPhaseAnim()),
-						listPerso.get(i).getPosXAnim() ,
-						listPerso.get(i).getPosYAnim(),
-						this
-					);
-
-				}
-
-
 			}
+
 
 		}
 
