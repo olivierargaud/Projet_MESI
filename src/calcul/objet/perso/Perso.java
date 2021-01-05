@@ -649,8 +649,16 @@ public class Perso
 	{
 		ArrayList<HitBox> hitBoxArrayList = new ArrayList<>();
 
+		// on scan la presence d'hitbox pour toutes les cases alentour
 		for (CaseCarte caseCarte:caseCarteArrayList)
 		{
+			// hitbox case de terrain
+			if(caseCarte.getHitbox()!=null)
+			{
+				hitBoxArrayList.add(caseCarte.getHitbox());
+			}
+
+			// hitbox objet decor
 			if (caseCarte.getObjetDecor()!=null)
 			{
 				if(caseCarte.getObjetDecor().getHitBox()!=null)
@@ -658,6 +666,19 @@ public class Perso
 					hitBoxArrayList.add(caseCarte.getObjetDecor().getHitBox());
 				}
 			}
+
+		}
+		// hitbox pnj
+		for (Perso perso:carteActuelle.getListPerso())
+		{
+			if(!(perso instanceof Link))
+			{
+				if(perso.getHitBox()!=null)
+				{
+					hitBoxArrayList.add(perso.getHitBox());
+				}
+			}
+
 		}
 
 		return hitBoxArrayList;

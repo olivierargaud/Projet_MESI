@@ -1,5 +1,7 @@
 package calcul.objet;
 
+import calcul.collision.HitBox;
+import calcul.collision.HitboxFull;
 import calcul.objet.decor.ObjetDecor;
 import calcul.objet.perso.PNJ;
 
@@ -33,6 +35,8 @@ public class CaseCarte extends JPanel
 	
 	private int posXDestination = 0;
 	private int posYDestination = 0;
+
+	private HitBox hitbox;
 	
 	private ObjetDecor objetDecor = null;
 
@@ -124,6 +128,11 @@ public class CaseCarte extends JPanel
 		return pnj;
 	}
 
+	public HitBox getHitbox()
+	{
+		return hitbox;
+	}
+
 
 	
 	// -------------------------------------------------------------------------------------------------------
@@ -168,6 +177,16 @@ public class CaseCarte extends JPanel
 	public void setPnj(PNJ pnj)
 	{
 		this.pnj = pnj;
+	}
+
+	public void setHitbox(HitBox hitbox)
+	{
+		this.hitbox = hitbox;
+		if(hitbox!=null)
+		{
+			this.hitbox.setOrigineX((posX*CaseCarte.caseWidth)+hitbox.getOrigineX());
+			this.hitbox.setOrigineY((posY*CaseCarte.caseHeight)+hitbox.getOrigineY());
+		}
 	}
 
 	// -------------------------------------------------------------------------------------------------------

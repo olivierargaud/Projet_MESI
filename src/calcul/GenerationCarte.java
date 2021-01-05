@@ -1,6 +1,7 @@
 package calcul;
 
 import calcul.collision.HitBox;
+import calcul.collision.HitboxFull;
 import calcul.objet.*;
 import calcul.objet.decor.Arbre;
 import calcul.objet.decor.Buisson;
@@ -207,8 +208,10 @@ public class GenerationCarte
 		for (int i = 0; i < Carte.carteWidth; i++)
 		{
 			carte.getListeCase().get("" + i + " " + 0).setTraversable(false);
+			carte.getListeCase().get("" + i + " " + 0).setHitbox(new HitboxFull());
 			carte.getListeCase().get("" + i + " " + 0).setType("mur");
 			carte.getListeCase().get("" + i + " " + (Carte.carteHeight-1)).setTraversable(false);
+			carte.getListeCase().get("" + i + " " + (Carte.carteHeight-1)).setHitbox(new HitboxFull());
 			carte.getListeCase().get("" + i + " " + (Carte.carteHeight-1)).setType("mur");
 		}
 
@@ -216,8 +219,10 @@ public class GenerationCarte
 		for (int i = 0; i < Carte.carteHeight; i++)
 		{
 			carte.getListeCase().get("" + 0 + " " + i).setTraversable(false);
+			carte.getListeCase().get("" + 0 + " " + i).setHitbox(new HitboxFull());
 			carte.getListeCase().get("" + 0 + " " + i).setType("mur");
 			carte.getListeCase().get("" + (Carte.carteWidth-1) + " " + i).setTraversable(false);
+			carte.getListeCase().get("" + (Carte.carteWidth-1) + " " + i).setHitbox(new HitboxFull());
 			carte.getListeCase().get("" + (Carte.carteWidth-1) + " " + i).setType("mur");
 		}
 
@@ -225,15 +230,14 @@ public class GenerationCarte
 		for (int i = 7; i < 9; i++)
 		{
 			carte.getListeCase().get("" + i + " " + 11).setTraversable(true);
+			carte.getListeCase().get("" + i + " " + 11).setHitbox(null);
 			carte.getListeCase().get("" + i + " " + 11).setType("sol");
 		}
 
 		// coffre
-		carte.getListeCase().get("" + 15 + " " + 4).setObjetDecor(
-						new Coffre("Gant de Force"));
+		carte.getListeCase().get("" + 15 + " " + 4).setObjetDecor(new Coffre("Gant de Force"));
 
-		carte.getListeCase().get("" + 12 + " " + 3).setObjetDecor(
-						new Coffre("Epée"));
+		carte.getListeCase().get("" + 12 + " " + 3).setObjetDecor(new Coffre("Epée"));
 
 		try
 		{
@@ -249,10 +253,13 @@ public class GenerationCarte
 
 
 			Coffre coffre2 =new Coffre(new Equipement(img2));
+			coffre2.setHitBox(new HitboxFull(2,1));
 			carte.getListeCase().get("" + 2 + " " + 1).setObjetDecor(coffre2);
 			Coffre coffre3 =new Coffre(new Equipement(img3));
+			coffre3.setHitBox(new HitboxFull(3,1));
 			carte.getListeCase().get("" + 3 + " " + 1).setObjetDecor(coffre3);
 			Coffre coffre4 =new Coffre(new Equipement(img4));
+			coffre4.setHitBox(new HitboxFull(4,1));
 			carte.getListeCase().get("" + 4 + " " + 1).setObjetDecor(coffre4);
 		}
 		catch (IOException e)
@@ -286,8 +293,10 @@ public class GenerationCarte
 		for (int i = 1; i < 12; i++)
 		{
 			carte.getListeCase().get("" + 0 + " " + i).setTraversable(false);
+			carte.getListeCase().get("" + 0 + " " + i).setHitbox(new HitboxFull());
 			carte.getListeCase().get("" + 0 + " " + i).setType("eau");
 			carte.getListeCase().get("" + 19 + " " + i).setTraversable(false);
+			carte.getListeCase().get("" + 19 + " " + i).setHitbox(new HitboxFull());
 			carte.getListeCase().get("" + 19 + " " + i).setType("eau");
 		}
 
@@ -296,12 +305,14 @@ public class GenerationCarte
 		{
 			carte.getListeCase().get("" + i + " " + 0).setTraversable(false);
 			carte.getListeCase().get("" + i + " " + 0).setType("mur");
+			carte.getListeCase().get("" + i + " " + 0).setHitbox(new HitboxFull());
 		}
 		
 		// porte d'entrée
 		for (int i = 7; i < 9; i++)
 		{
 			carte.getListeCase().get("" + i + " " + 0).setTraversable(true);
+			carte.getListeCase().get("" + i + " " + 0).setHitbox(null);
 			carte.getListeCase().get("" + i + " " + 0).setType("sol");
 		}
 		
