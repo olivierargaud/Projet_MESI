@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import calcul.collision.HitBox;
 import calcul.objet.CaseCarte;
 import calcul.objet.decor.Arbre;
 import calcul.objet.decor.Coffre;
@@ -102,7 +103,14 @@ public class Link extends Perso
 
 	public void planterUnArbre()
 	{
-		getCaseDevant().setObjetDecor(new Arbre());
+		HitBox hitBox = new HitBox
+		(
+			getCaseDevant().getX()*CaseCarte.caseWidth,
+			getCaseDevant().getY()*CaseCarte.caseHeight,
+			64,
+			64
+		);
+		getCaseDevant().setObjetDecor(new Arbre(hitBox));
 	}
 
 	public void couperUnArbre()

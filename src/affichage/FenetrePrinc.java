@@ -222,7 +222,7 @@ public class FenetrePrinc extends JFrame
 
 
 					System.out.println("case :");
-					for (CaseCarte caseCarte: MainZeldo.link.getOuest())
+					for (CaseCarte caseCarte: MainZeldo.link.getSurround())
 					{
 						System.out.println("case " +caseCarte.getX() +" " +caseCarte.getY() );
 						if(caseCarte.getObjetDecor()!=null)
@@ -233,7 +233,7 @@ public class FenetrePrinc extends JFrame
 
 
 					System.out.print("hitbox objet :");
-					for (HitBox hitBox:MainZeldo.link.getCollicionOuest() )
+					for (HitBox hitBox:MainZeldo.link.getCollisionSurround() )
 					{
 						System.out.println("hitbox   x : " + hitBox.getOrigineX() + " y " + hitBox.getOrigineY());
 					}
@@ -244,21 +244,20 @@ public class FenetrePrinc extends JFrame
 				// Z
 				if (e.getKeyCode() == 90)
 				{
-					// tempsDePause = 40;
+
 				}
 
 				// D
 				if (e.getKeyCode() == 68)
 				{
-					// System.out.println("case devant avant deplacement
-					// "+MainZelda.listePerso.get("Link").getCaseDevant().getAdresseCase());
 
 				}
 
 				// S
 				if (e.getKeyCode() == 83)
 				{
-					// tempsDePause = 400;
+					System.out.println("test collision ouest");
+					new TestCollision().isCollisioning(MainZeldo.link.getHitBox(),MainZeldo.link.getCollisionSurround(),OUEST);
 				}
 
 				// A
@@ -282,17 +281,13 @@ public class FenetrePrinc extends JFrame
 						System.out.println("perso "+perso.getType());
 					}
 					System.out.println();
-					
-					// if(start)
-					// {
-					// MainZelda.inv = new Inventaire();
-					// }
+
 				}
 
 				// barre espace
 				if (e.getKeyCode() == 32)
 				{
-					 System.out.println("action");
+					System.out.println("action");
 
 					////////////////////////////////////////////////////////////////////
 					// ouvrir un coffre
@@ -318,7 +313,6 @@ public class FenetrePrinc extends JFrame
 
 
 
-					// actionLink(MainZelda.listePerso.get("Link"));
 				}
 
 				// entrer
@@ -330,6 +324,7 @@ public class FenetrePrinc extends JFrame
 				// esc
 				if (e.getKeyCode() == 27)
 				{
+					// on reset les mouvements avant d'afficher le menu
 					haut = bas = gauche = droite = false ;
 					new MenuPrinc();
 				}
@@ -578,26 +573,25 @@ public class FenetrePrinc extends JFrame
 				boolean nextAnim = false;
 
 
-
-				if (gauche && !new TestCollision().isCollisioning(MainZeldo.link.getHitBox(),MainZeldo.link.getCollicionOuest()))
+				if (gauche && !new TestCollision().isCollisioning(MainZeldo.link.getHitBox(),MainZeldo.link.getCollisionSurround(),OUEST))
 				{
 					MainZeldo.link.setPosXAnim(MainZeldo.link.getPosXAnim() - PAS_PIXEL);
 //					MainZeldo.link.getHitBox().plusX(-PAS_PIXEL);
 					nextAnim = true;
 				}
-				if (haut && MainZeldo.link.getMoveHaut())
+				if (haut && !new TestCollision().isCollisioning(MainZeldo.link.getHitBox(),MainZeldo.link.getCollisionSurround(),NORD))
 				{
 					MainZeldo.link.setPosYAnim(MainZeldo.link.getPosYAnim() - PAS_PIXEL);
 //					MainZeldo.link.getHitBox().plusY(-PAS_PIXEL);
 					nextAnim = true;
 				}
-				if (droite && MainZeldo.link.getMoveDroite())
+				if (droite && !new TestCollision().isCollisioning(MainZeldo.link.getHitBox(),MainZeldo.link.getCollisionSurround(),EST))
 				{
 					MainZeldo.link.setPosXAnim(MainZeldo.link.getPosXAnim() + PAS_PIXEL);
 //					MainZeldo.link.getHitBox().plusX(PAS_PIXEL);
 					nextAnim = true;
 				}
-				if (bas && MainZeldo.link.getMoveBas())
+				if (bas && !new TestCollision().isCollisioning(MainZeldo.link.getHitBox(),MainZeldo.link.getCollisionSurround(),SUD))
 				{
 					MainZeldo.link.setPosYAnim(MainZeldo.link.getPosYAnim() + PAS_PIXEL);
 //					MainZeldo.link.getHitBox().plusY(PAS_PIXEL);

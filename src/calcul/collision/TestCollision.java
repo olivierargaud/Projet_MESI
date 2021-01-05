@@ -44,22 +44,60 @@ public class TestCollision
     }
 
 
-    public Boolean isCollisioning(HitBox hitBox, ArrayList<HitBox> boxArrayList )
+    public Boolean isCollisioning(HitBox hitBox, ArrayList<HitBox> boxArrayList,Integer direction )
     {
         Boolean collision = false;
 
+        Rectangle rectangle = new Rectangle(hitBox.getOrigineX(),hitBox.getOrigineY(),hitBox.getWidth(),hitBox.getHeight());
+
+        switch (direction)
+        {
+            case 0:
+            {
+                // NORD
+                rectangle = new Rectangle(hitBox.getOrigineX(),hitBox.getOrigineY()-4,hitBox.getWidth(),hitBox.getHeight());
+                break;
+            }
+            case 1:
+            {
+                // OUEST
+                rectangle = new Rectangle(hitBox.getOrigineX()-4,hitBox.getOrigineY(),hitBox.getWidth(),hitBox.getHeight());
+                break;
+            }
+            case 2:
+            {
+                // SUD
+                rectangle = new Rectangle(hitBox.getOrigineX(),hitBox.getOrigineY()+4,hitBox.getWidth(),hitBox.getHeight());
+                break;
+            }
+            case 3:
+            {
+                // EST
+                rectangle = new Rectangle(hitBox.getOrigineX()+4,hitBox.getOrigineY(),hitBox.getWidth(),hitBox.getHeight());
+                break;
+            }
+        }
+
         for (HitBox hit:boxArrayList)
         {
-            if
-            (
-                hitBox.getOrigineX() < hit.getOrigineX() + hit.getWidth() &&
-                hitBox.getOrigineX() + hitBox.getWidth() > hit.getOrigineX() &&
-                hitBox.getOrigineY() < hit.getOrigineY() + hit.getHeight() &&
-                hitBox.getHeight() + hitBox.getOrigineY() > hit.getOrigineY()
-            )
+            Rectangle rectangle1 = new Rectangle(hit.getOrigineX(),hit.getOrigineY(),hit.getWidth(),hit.getHeight());
+
+            if(rectangle.intersects(rectangle1))
             {
                 collision = true;
             }
+
+
+//            if
+//            (
+//                hitBox.getOrigineX() < hit.getOrigineX() + hit.getWidth() &&
+//                hitBox.getOrigineX() + hitBox.getWidth() > hit.getOrigineX() &&
+//                hitBox.getOrigineY() < hit.getOrigineY() + hit.getHeight() &&
+//                hitBox.getHeight() + hitBox.getOrigineY() > hit.getOrigineY()
+//            )
+//            {
+//                collision = true;
+//            }
         }
 
         return collision;

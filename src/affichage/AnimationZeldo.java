@@ -6,6 +6,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import calcul.MainZeldo;
+import calcul.collision.HitBox;
 import calcul.fonction_maison.Couleur;
 import calcul.objet.Carte;
 import calcul.objet.CaseCarte;
@@ -216,6 +217,14 @@ public class AnimationZeldo extends Carte
 					caseTemp.getY() * CaseCarte.caseHeight ,
 					this
 				);
+
+				if(caseTemp.getObjetDecor().getHitBox()!=null)
+				{
+					HitBox hit = caseTemp.getObjetDecor().getHitBox();
+					g.setColor(new Color(255,0,0,100));
+					g.fillRect(hit.getOrigineX(),hit.getOrigineY(),hit.getWidth(),hit.getHeight());
+				}
+
 			}
 			
 		}
@@ -245,11 +254,17 @@ public class AnimationZeldo extends Carte
 					System.out.println("case devant "+MainZeldo.link.getCaseDevant());
 				}
 
+
+				// passe en rouge la hitbox du perso
+				HitBox hit = MainZeldo.link.getHitBox();
+				g.setColor(new Color(255,0,0,100));
+				g.fillRect(hit.getOrigineX(),hit.getOrigineY(),hit.getWidth(),hit.getHeight());
+
 				// passe en violet les cases a l'ouest de zeldo
 				try
 				{
 					g.setColor(new Color(255,0,255,100));
-					for (CaseCarte caseCarte:MainZeldo.link.getOuest())
+					for (CaseCarte caseCarte:MainZeldo.link.getSurround())
 					{
 						g.fillRect
 							(
@@ -259,36 +274,6 @@ public class AnimationZeldo extends Carte
 								CaseCarte.caseHeight
 							);
 					}
-					for (CaseCarte caseCarte:MainZeldo.link.getEst())
-					{
-						g.fillRect
-								(
-										caseCarte.getX()*CaseCarte.caseWidth,
-										caseCarte.getY()*CaseCarte.caseHeight,
-										CaseCarte.caseWidth,
-										CaseCarte.caseHeight
-								);
-					}
-					for (CaseCarte caseCarte:MainZeldo.link.getNord())
-					{
-						g.fillRect
-								(
-										caseCarte.getX()*CaseCarte.caseWidth,
-										caseCarte.getY()*CaseCarte.caseHeight,
-										CaseCarte.caseWidth,
-										CaseCarte.caseHeight
-								);
-					}
-					for (CaseCarte caseCarte:MainZeldo.link.getSud())
-					{
-						g.fillRect
-								(
-										caseCarte.getX()*CaseCarte.caseWidth,
-										caseCarte.getY()*CaseCarte.caseHeight,
-										CaseCarte.caseWidth,
-										CaseCarte.caseHeight
-								);
-					}
 
 				}
 				catch (Exception exep)
@@ -297,6 +282,11 @@ public class AnimationZeldo extends Carte
 				}
 
 			}
+
+			// passe en rouge la hitbox du perso
+			HitBox hit = listPerso.get(i).getHitBox();
+			g.setColor(new Color(255,0,0,100));
+			g.fillRect(hit.getOrigineX(),hit.getOrigineY(),hit.getWidth(),hit.getHeight());
 
 //			System.out.println(listPerso.get(i).getImage());
 //			System.out.println(listPerso.get(i).getPosXAnim());

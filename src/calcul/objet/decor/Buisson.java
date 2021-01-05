@@ -59,7 +59,9 @@ public class Buisson extends ObjetDecor
 	public Buisson(HitBox hitBox)
 	{
 		super();
+
 		this.hitBox = hitBox;
+
 		try
 		{
 			img = ImageIO.read(new File("res/image/buisson.png"));

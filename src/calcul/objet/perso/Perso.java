@@ -46,6 +46,7 @@ public class Perso
 	
 	protected Color color = Color.WHITE;
 
+
 	protected CaseCarte caseActuelle = null;
 	protected CaseCarte caseDevant = null;
 	protected CaseCarte caseGauche = null;
@@ -203,7 +204,14 @@ public class Perso
 
 		return caseDevant;
 	}
-	
+
+	public CaseCarte getCaseActuelle()
+	{
+		caseActuelle = carteActuelle.getListeCase().get(""+posX+" "+posY);
+
+		return caseActuelle;
+	}
+
 	public CaseCarte getCaseGauche()
 	{
 		int tempX = (posXAnim-(CaseCarte.caseWidth/2))/CaseCarte.caseWidth;
@@ -496,92 +504,145 @@ public class Perso
 	// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
 
-
-	public ArrayList<CaseCarte> getOuest()
+	public ArrayList<CaseCarte> getSurround()
 	{
-		ArrayList<CaseCarte> casesOuest = new ArrayList<>();
+		ArrayList<CaseCarte> casesSurround = new ArrayList<>();
 
+		// case sur laquelle se trouve le perso
+		casesSurround.add(getCaseActuelle());
+
+		// 3 cases de gauche
 		for(int i = -1;i<2;i++)
 		{
 			Coord coord = new Coord(posX-1,posY+i);
 			CaseCarte caseCarte = MainZeldo.carteActuelle.getListeCase().get(coord.getKeyCoord());
 			if(caseCarte!=null)
 			{
-				casesOuest.add(caseCarte);
+				casesSurround.add(caseCarte);
 			}
 		}
 
-		return casesOuest;
-	}
-
-	public ArrayList<CaseCarte> getEst()
-	{
-		ArrayList<CaseCarte> casesEst = new ArrayList<>();
-
+		// 3 cases de droite
 		for(int i = -1;i<2;i++)
 		{
 			Coord coord = new Coord(posX+1,posY+i);
 			CaseCarte caseCarte = MainZeldo.carteActuelle.getListeCase().get(coord.getKeyCoord());
 			if(caseCarte!=null)
 			{
-				casesEst.add(caseCarte);
+				casesSurround.add(caseCarte);
 			}
 		}
 
-		return casesEst;
-	}
-
-	public ArrayList<CaseCarte> getNord()
-	{
-		ArrayList<CaseCarte> casesNord = new ArrayList<>();
-
-		for(int i = -1;i<2;i++)
+		// case du bas
+		Coord coord = new Coord(posX,posY+1);
+		CaseCarte caseCarte = MainZeldo.carteActuelle.getListeCase().get(coord.getKeyCoord());
+		if(caseCarte!=null)
 		{
-			Coord coord = new Coord(posX+i,posY-1);
-			CaseCarte caseCarte = MainZeldo.carteActuelle.getListeCase().get(coord.getKeyCoord());
-			if(caseCarte!=null)
-			{
-				casesNord.add(caseCarte);
-			}
+			casesSurround.add(caseCarte);
 		}
 
-		return casesNord;
-	}
-
-	public ArrayList<CaseCarte> getSud()
-	{
-		ArrayList<CaseCarte> casesSud = new ArrayList<>();
-
-		for(int i = -1;i<2;i++)
+		// case du haut
+		coord = new Coord(posX,posY-1);
+		caseCarte = MainZeldo.carteActuelle.getListeCase().get(coord.getKeyCoord());
+		if(caseCarte!=null)
 		{
-			Coord coord = new Coord(posX+i,posY+1);
-			CaseCarte caseCarte = MainZeldo.carteActuelle.getListeCase().get(coord.getKeyCoord());
-			if(caseCarte!=null)
-			{
-				casesSud.add(caseCarte);
-			}
+			casesSurround.add(caseCarte);
 		}
 
-		return casesSud;
+		return casesSurround;
 	}
 
+//	public ArrayList<CaseCarte> getOuest()
+//	{
+//		ArrayList<CaseCarte> casesOuest = new ArrayList<>();
+//
+//		casesOuest.add(getCaseActuelle());
+//
+//		for(int i = -1;i<2;i++)
+//		{
+//			Coord coord = new Coord(posX-1,posY+i);
+//			CaseCarte caseCarte = MainZeldo.carteActuelle.getListeCase().get(coord.getKeyCoord());
+//			if(caseCarte!=null)
+//			{
+//				casesOuest.add(caseCarte);
+//			}
+//		}
+//
+//		return casesOuest;
+//	}
+//
+//	public ArrayList<CaseCarte> getEst()
+//	{
+//		ArrayList<CaseCarte> casesEst = new ArrayList<>();
+//
+//		for(int i = -1;i<2;i++)
+//		{
+//			Coord coord = new Coord(posX+1,posY+i);
+//			CaseCarte caseCarte = MainZeldo.carteActuelle.getListeCase().get(coord.getKeyCoord());
+//			if(caseCarte!=null)
+//			{
+//				casesEst.add(caseCarte);
+//			}
+//		}
+//
+//		return casesEst;
+//	}
+//
+//	public ArrayList<CaseCarte> getNord()
+//	{
+//		ArrayList<CaseCarte> casesNord = new ArrayList<>();
+//
+//		for(int i = -1;i<2;i++)
+//		{
+//			Coord coord = new Coord(posX+i,posY-1);
+//			CaseCarte caseCarte = MainZeldo.carteActuelle.getListeCase().get(coord.getKeyCoord());
+//			if(caseCarte!=null)
+//			{
+//				casesNord.add(caseCarte);
+//			}
+//		}
+//
+//		return casesNord;
+//	}
+//
+//	public ArrayList<CaseCarte> getSud()
+//	{
+//		ArrayList<CaseCarte> casesSud = new ArrayList<>();
+//
+//		for(int i = -1;i<2;i++)
+//		{
+//			Coord coord = new Coord(posX+i,posY+1);
+//			CaseCarte caseCarte = MainZeldo.carteActuelle.getListeCase().get(coord.getKeyCoord());
+//			if(caseCarte!=null)
+//			{
+//				casesSud.add(caseCarte);
+//			}
+//		}
+//
+//		return casesSud;
+//	}
 
-	public ArrayList<HitBox> getCollicionOuest()
+	public ArrayList<HitBox> getCollisionSurround()
 	{
-		return getCollision(getOuest());
+		return getCollision(getSurround());
 	}
-	public ArrayList<HitBox> getCollicionEst()
-	{
-		return getCollision(getEst());
-	}
-	public ArrayList<HitBox> getCollicionNord()
-	{
-		return getCollision(getNord());
-	}
-	public ArrayList<HitBox> getCollicionSud()
-	{
-		return getCollision(getSud());
-	}
+
+//	public ArrayList<HitBox> getCollicionOuest()
+//	{
+//		return getCollision(getOuest());
+//	}
+//	public ArrayList<HitBox> getCollicionEst()
+//	{
+//		return getCollision(getEst());
+//	}
+//	public ArrayList<HitBox> getCollicionNord()
+//	{
+//		return getCollision(getNord());
+//	}
+//	public ArrayList<HitBox> getCollicionSud()
+//	{
+//		return getCollision(getSud());
+//	}
 
 
 	public ArrayList<HitBox> getCollision(ArrayList<CaseCarte>caseCarteArrayList)
