@@ -212,8 +212,8 @@ public class AnimationZeldo extends Carte
 				g.drawImage
 				(
 					caseTemp.getObjetDecor().getImage(),
-					caseTemp.getX() * CaseCarte.caseWidth,
-					caseTemp.getY() * CaseCarte.caseHeight,
+					caseTemp.getX() * CaseCarte.caseWidth ,
+					caseTemp.getY() * CaseCarte.caseHeight ,
 					this
 				);
 			}
@@ -234,11 +234,62 @@ public class AnimationZeldo extends Carte
 					g.setColor(new Color(0,255,255,100));
 					g.fillRect
 					(
-						MainZeldo.link.getCaseDevant().getX()*CaseCarte.caseWidth,
-						MainZeldo.link.getCaseDevant().getY()*CaseCarte.caseHeight,
+						MainZeldo.link.getCaseDevant().getX()*CaseCarte.caseWidth ,
+						MainZeldo.link.getCaseDevant().getY()*CaseCarte.caseHeight ,
 						CaseCarte.caseWidth,
 						CaseCarte.caseHeight
 					);
+				}
+				catch (Exception exep)
+				{
+					System.out.println("case devant "+MainZeldo.link.getCaseDevant());
+				}
+
+				// passe en violet les cases a l'ouest de zeldo
+				try
+				{
+					g.setColor(new Color(255,0,255,100));
+					for (CaseCarte caseCarte:MainZeldo.link.getOuest())
+					{
+						g.fillRect
+							(
+								caseCarte.getX()*CaseCarte.caseWidth,
+								caseCarte.getY()*CaseCarte.caseHeight,
+								CaseCarte.caseWidth,
+								CaseCarte.caseHeight
+							);
+					}
+					for (CaseCarte caseCarte:MainZeldo.link.getEst())
+					{
+						g.fillRect
+								(
+										caseCarte.getX()*CaseCarte.caseWidth,
+										caseCarte.getY()*CaseCarte.caseHeight,
+										CaseCarte.caseWidth,
+										CaseCarte.caseHeight
+								);
+					}
+					for (CaseCarte caseCarte:MainZeldo.link.getNord())
+					{
+						g.fillRect
+								(
+										caseCarte.getX()*CaseCarte.caseWidth,
+										caseCarte.getY()*CaseCarte.caseHeight,
+										CaseCarte.caseWidth,
+										CaseCarte.caseHeight
+								);
+					}
+					for (CaseCarte caseCarte:MainZeldo.link.getSud())
+					{
+						g.fillRect
+								(
+										caseCarte.getX()*CaseCarte.caseWidth,
+										caseCarte.getY()*CaseCarte.caseHeight,
+										CaseCarte.caseWidth,
+										CaseCarte.caseHeight
+								);
+					}
+
 				}
 				catch (Exception exep)
 				{
@@ -254,8 +305,8 @@ public class AnimationZeldo extends Carte
 			g.drawImage
 			(
 				listPerso.get(i).getImage(),
-				listPerso.get(i).getPosXAnim(),
-				listPerso.get(i).getPosYAnim(),
+				listPerso.get(i).getPosXAnim() - CaseCarte.caseWidth/2,
+				listPerso.get(i).getPosYAnim() - CaseCarte.caseHeight/2,
 				this
 			);
 

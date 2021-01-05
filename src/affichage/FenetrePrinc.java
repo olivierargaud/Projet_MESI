@@ -16,6 +16,8 @@ import javax.swing.GroupLayout.Alignment;
 
 import calcul.GenerationCarte;
 import calcul.MainZeldo;
+import calcul.collision.HitBox;
+import calcul.collision.TestCollision;
 import calcul.fonction_maison.Couleur;
 import calcul.objet.CaseCarte;
 import calcul.objet.perso.PNJ;
@@ -41,7 +43,7 @@ public class FenetrePrinc extends JFrame
 
 	public static final Integer PAS_PIXEL = 4;
 
-	public static final Integer TEMPS_DE_PAUSE = 20;
+	public static final Integer TEMPS_DE_PAUSE = 10;
 
 	private JPanel panelPrinc = new JPanel();
 
@@ -212,6 +214,30 @@ public class FenetrePrinc extends JFrame
 				// Q
 				if (e.getKeyCode() == 81)
 				{
+					System.out.println
+					(
+						"hitbox perso  x: " + MainZeldo.link.getHitBox().getOrigineX()
+						+ " y: " +	MainZeldo.link.getHitBox().getOrigineY()
+					);
+
+
+					System.out.println("case :");
+					for (CaseCarte caseCarte: MainZeldo.link.getOuest())
+					{
+						System.out.println("case " +caseCarte.getX() +" " +caseCarte.getY() );
+						if(caseCarte.getObjetDecor()!=null)
+						{
+							System.out.println("objet :" + caseCarte.getObjetDecor().getTypeObjet());
+						}
+					}
+
+
+					System.out.print("hitbox objet :");
+					for (HitBox hitBox:MainZeldo.link.getCollicionOuest() )
+					{
+						System.out.println("hitbox   x : " + hitBox.getOrigineX() + " y " + hitBox.getOrigineY());
+					}
+					System.out.println(" ");
 
 				}
 
@@ -481,7 +507,7 @@ public class FenetrePrinc extends JFrame
 		}
 
 		link.setCarteActuelle(MainZeldo.carteActuelle);
-
+		link.setHitBox(new HitBox(16,32,32,32));
 //		try
 //		{
 //			Equipement pantalon = new Equipement();
@@ -547,28 +573,71 @@ public class FenetrePrinc extends JFrame
 			}
 			else
 			{
-//				MainZeldo.link.setImage(MainZeldo.link.getListeImage().get(MainZeldo.link.getPhaseAnim()));
+
+
 				boolean nextAnim = false;
-				if (gauche && MainZeldo.link.getMoveGauche())
+
+
+
+				if (gauche && !new TestCollision().isCollisioning(MainZeldo.link.getHitBox(),MainZeldo.link.getCollicionOuest()))
 				{
 					MainZeldo.link.setPosXAnim(MainZeldo.link.getPosXAnim() - PAS_PIXEL);
+//					MainZeldo.link.getHitBox().plusX(-PAS_PIXEL);
 					nextAnim = true;
 				}
 				if (haut && MainZeldo.link.getMoveHaut())
 				{
 					MainZeldo.link.setPosYAnim(MainZeldo.link.getPosYAnim() - PAS_PIXEL);
+//					MainZeldo.link.getHitBox().plusY(-PAS_PIXEL);
 					nextAnim = true;
 				}
 				if (droite && MainZeldo.link.getMoveDroite())
 				{
 					MainZeldo.link.setPosXAnim(MainZeldo.link.getPosXAnim() + PAS_PIXEL);
+//					MainZeldo.link.getHitBox().plusX(PAS_PIXEL);
 					nextAnim = true;
 				}
 				if (bas && MainZeldo.link.getMoveBas())
 				{
 					MainZeldo.link.setPosYAnim(MainZeldo.link.getPosYAnim() + PAS_PIXEL);
+//					MainZeldo.link.getHitBox().plusY(PAS_PIXEL);
 					nextAnim = true;
 				}
+
+
+
+
+
+
+
+
+//				if (gauche && MainZeldo.link.getMoveGauche())
+//				{
+//					MainZeldo.link.setPosXAnim(MainZeldo.link.getPosXAnim() - PAS_PIXEL);
+//					nextAnim = true;
+//				}
+//				if (haut && MainZeldo.link.getMoveHaut())
+//				{
+//					MainZeldo.link.setPosYAnim(MainZeldo.link.getPosYAnim() - PAS_PIXEL);
+//					nextAnim = true;
+//				}
+//				if (droite && MainZeldo.link.getMoveDroite())
+//				{
+//					MainZeldo.link.setPosXAnim(MainZeldo.link.getPosXAnim() + PAS_PIXEL);
+//					nextAnim = true;
+//				}
+//				if (bas && MainZeldo.link.getMoveBas())
+//				{
+//					MainZeldo.link.setPosYAnim(MainZeldo.link.getPosYAnim() + PAS_PIXEL);
+//					nextAnim = true;
+//				}
+
+
+
+
+
+
+
 				if(nextAnim)
 				{
 					MainZeldo.link.setPhaseAnim(MainZeldo.link.getPhaseAnim()+1);
@@ -580,6 +649,7 @@ public class FenetrePrinc extends JFrame
 				{
 					MainZeldo.link.setPhaseAnim(0);
 				}
+
 
 //					System.out.println("direction " +MainZeldo.link.getDirection());
 

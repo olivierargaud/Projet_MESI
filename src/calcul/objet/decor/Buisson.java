@@ -1,5 +1,7 @@
 package calcul.objet.decor;
 
+import calcul.collision.HitBox;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -36,6 +38,8 @@ public class Buisson extends ObjetDecor
 		}
 	}
 
+
+
 	public Buisson(String tresor)
 	{
 		this.tresor = tresor;
@@ -51,8 +55,23 @@ public class Buisson extends ObjetDecor
 		}
 		
 	}
-	
-	
+
+	public Buisson(HitBox hitBox)
+	{
+		super();
+		this.hitBox = hitBox;
+		try
+		{
+			img = ImageIO.read(new File("res/image/buisson.png"));
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
 	// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
 	// -----------------------------------------------GETTER--------------------------------------------------

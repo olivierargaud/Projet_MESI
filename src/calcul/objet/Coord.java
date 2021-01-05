@@ -14,7 +14,10 @@ public class Coord
 	private int posY = 0;
 	
 	private Random rand = new Random();
-	
+
+
+
+	private String keyCoord;
 
 	// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
@@ -26,7 +29,7 @@ public class Coord
 	{
 		// coord random 1<X<16 1<Y<12
 		
-		this.posX = rand.nextInt(16)+1;
+		this.posX = rand.nextInt(20)+1;
 		this.posY = rand.nextInt(12)+1;
 	}
 
@@ -52,6 +55,14 @@ public class Coord
 		return posY;
 	}
 
+	public String getKeyCoord()
+	{
+		keyCoord =""+posX+" "+posY;
+
+		return keyCoord;
+	}
+
+
 	// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
 	// -----------------------------------------------SETTER--------------------------------------------------
@@ -66,6 +77,11 @@ public class Coord
 	public void setPosY(int posY)
 	{
 		this.posY = posY;
+	}
+
+	public void setKeyCoord(String keyCoord)
+	{
+		this.keyCoord = keyCoord;
 	}
 
 	// -------------------------------------------------------------------------------------------------------

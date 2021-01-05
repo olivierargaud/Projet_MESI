@@ -1,5 +1,7 @@
 package calcul.objet.decor;
 
+import calcul.collision.HitBox;
+
 import java.awt.Image;
 import java.io.Serializable;
 
@@ -22,6 +24,8 @@ public class ObjetDecor implements Serializable
 
 	protected boolean deplacable = false;
 
+	protected HitBox hitBox;
+
 	// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
 	// -----------------------------------------------CONSTRUCTEUR--------------------------------------------
@@ -33,7 +37,13 @@ public class ObjetDecor implements Serializable
 
 	}
 
-	// -------------------------------------------------------------------------------------------------------
+	public ObjetDecor(HitBox hitBox)
+	{
+		this.hitBox = hitBox;
+	}
+
+
+// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
 	// -----------------------------------------------GETTER--------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
@@ -57,6 +67,11 @@ public class ObjetDecor implements Serializable
 	public boolean getDeplacable()
 	{
 		return deplacable;
+	}
+
+	public HitBox getHitBox()
+	{
+		return hitBox;
 	}
 
 	// -------------------------------------------------------------------------------------------------------
@@ -83,6 +98,11 @@ public class ObjetDecor implements Serializable
 	public void setDeplacable(boolean deplacable)
 	{
 		this.deplacable = deplacable;
+	}
+
+	public void setHitBox(HitBox hitBox)
+	{
+		this.hitBox = hitBox;
 	}
 
 	// -------------------------------------------------------------------------------------------------------

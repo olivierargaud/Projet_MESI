@@ -4,8 +4,11 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import calcul.MainZeldo;
+import calcul.collision.HitBox;
 import calcul.objet.Carte;
 import calcul.objet.CaseCarte;
+import calcul.objet.Coord;
 import calcul.objet.equipement.Equipement;
 
 public class Perso
@@ -27,7 +30,9 @@ public class Perso
 
 	protected int		posXAnim		= posX* CaseCarte.caseHeight;
 	protected int		posYAnim		= posY* CaseCarte.caseWidth;
-	
+
+	protected HitBox hitBox;
+
 	protected int	direction	= 2;
 	protected int	memoireDirection	= 1;
 	
@@ -40,7 +45,8 @@ public class Perso
 	protected boolean deplace = false;
 	
 	protected Color color = Color.WHITE;
-	
+
+	protected CaseCarte caseActuelle = null;
 	protected CaseCarte caseDevant = null;
 	protected CaseCarte caseGauche = null;
 	protected CaseCarte caseHaut = null;
@@ -350,6 +356,13 @@ public class Perso
 		return sprite;
 	}
 
+	public HitBox getHitBox()
+	{
+		hitBox  = new HitBox(posXAnim,posYAnim,32,32);
+
+		return hitBox;
+	}
+
 
 	
 	// -------------------------------------------------------------------------------------------------------
@@ -472,6 +485,11 @@ public class Perso
 		this.sprite = sprite;
 	}
 
+	public void setHitBox(HitBox hitBox)
+	{
+		this.hitBox = hitBox;
+	}
+
 	// -------------------------------------------------------------------------------------------------------
 	// -------------------------------------------------------------------------------------------------------
 	// -----------------------------------------------FONCTION------------------------------------------------
@@ -479,8 +497,110 @@ public class Perso
 	// -------------------------------------------------------------------------------------------------------
 
 
+	public ArrayList<CaseCarte> getOuest()
+	{
+		ArrayList<CaseCarte> casesOuest = new ArrayList<>();
+
+		for(int i = -1;i<2;i++)
+		{
+			Coord coord = new Coord(posX-1,posY+i);
+			CaseCarte caseCarte = MainZeldo.carteActuelle.getListeCase().get(coord.getKeyCoord());
+			if(caseCarte!=null)
+			{
+				casesOuest.add(caseCarte);
+			}
+		}
+
+		return casesOuest;
+	}
+
+	public ArrayList<CaseCarte> getEst()
+	{
+		ArrayList<CaseCarte> casesEst = new ArrayList<>();
+
+		for(int i = -1;i<2;i++)
+		{
+			Coord coord = new Coord(posX+1,posY+i);
+			CaseCarte caseCarte = MainZeldo.carteActuelle.getListeCase().get(coord.getKeyCoord());
+			if(caseCarte!=null)
+			{
+				casesEst.add(caseCarte);
+			}
+		}
+
+		return casesEst;
+	}
+
+	public ArrayList<CaseCarte> getNord()
+	{
+		ArrayList<CaseCarte> casesNord = new ArrayList<>();
+
+		for(int i = -1;i<2;i++)
+		{
+			Coord coord = new Coord(posX+i,posY-1);
+			CaseCarte caseCarte = MainZeldo.carteActuelle.getListeCase().get(coord.getKeyCoord());
+			if(caseCarte!=null)
+			{
+				casesNord.add(caseCarte);
+			}
+		}
+
+		return casesNord;
+	}
+
+	public ArrayList<CaseCarte> getSud()
+	{
+		ArrayList<CaseCarte> casesSud = new ArrayList<>();
+
+		for(int i = -1;i<2;i++)
+		{
+			Coord coord = new Coord(posX+i,posY+1);
+			CaseCarte caseCarte = MainZeldo.carteActuelle.getListeCase().get(coord.getKeyCoord());
+			if(caseCarte!=null)
+			{
+				casesSud.add(caseCarte);
+			}
+		}
+
+		return casesSud;
+	}
 
 
+	public ArrayList<HitBox> getCollicionOuest()
+	{
+		return getCollision(getOuest());
+	}
+	public ArrayList<HitBox> getCollicionEst()
+	{
+		return getCollision(getEst());
+	}
+	public ArrayList<HitBox> getCollicionNord()
+	{
+		return getCollision(getNord());
+	}
+	public ArrayList<HitBox> getCollicionSud()
+	{
+		return getCollision(getSud());
+	}
 
-	
+
+	public ArrayList<HitBox> getCollision(ArrayList<CaseCarte>caseCarteArrayList)
+	{
+		ArrayList<HitBox> hitBoxArrayList = new ArrayList<>();
+
+		for (CaseCarte caseCarte:caseCarteArrayList)
+		{
+			if (caseCarte.getObjetDecor()!=null)
+			{
+				if(caseCarte.getObjetDecor().getHitBox()!=null)
+				{
+					hitBoxArrayList.add(caseCarte.getObjetDecor().getHitBox());
+				}
+			}
+		}
+
+		return hitBoxArrayList;
+	}
+
+
 }

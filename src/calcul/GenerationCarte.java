@@ -1,5 +1,6 @@
 package calcul;
 
+import calcul.collision.HitBox;
 import calcul.objet.*;
 import calcul.objet.decor.Arbre;
 import calcul.objet.decor.Buisson;
@@ -305,9 +306,10 @@ public class GenerationCarte
 		}
 		
 		// buisson
-		carte.getListeCase().get("" + 5 + " " + 7).setObjetDecor(new Buisson());
+
+		carte.getListeCase().get("" + 5 + " " + 7).setObjetDecor(new Buisson(new HitBox(0+5*CaseCarte.caseWidth,0+7*CaseCarte.caseHeight,40,40)));
 		
-		carte.getListeCase().get("" + 14 + " " + 7).setObjetDecor(new Buisson());
+		carte.getListeCase().get("" + 14 + " " + 7).setObjetDecor(new Buisson(new HitBox(24+14*CaseCarte.caseWidth,24+7*CaseCarte.caseHeight,40,40)));
 
 		Squelette squelette = new Squelette(3, 5, 2, "Squelette");
 		try
